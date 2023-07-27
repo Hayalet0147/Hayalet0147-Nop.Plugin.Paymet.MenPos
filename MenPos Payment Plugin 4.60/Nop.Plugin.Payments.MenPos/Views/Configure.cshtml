@@ -1,0 +1,317 @@
+﻿@inject Nop.Core.IWebHelper webHelper
+@model ConfigurationModel
+
+@{
+    Layout = "_ConfigurePlugin";
+}
+
+<style>
+    /* Sekmelerin stilini belirleyin */
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+        /* Sekme düğmelerinin stilini belirleyin */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+            /* Aktif sekmeyi vurgulayın */
+            .tab button.active {
+                background-color: #ccc;
+            }
+
+    /* Sekme içeriğinin stilini belirleyin */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+</style>
+
+<!-- Sekmeleri oluşturun -->
+<div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'Sekme1')">Param Pos</button>
+    <button class="tablinks" onclick="openTab(event, 'Sekme2')">Kuveyt Türk</button>
+    <button class="tablinks" onclick="openTab(event, 'Sekme3')">Diğer Ayarlar</button>
+</div>
+<form asp-controller="PaymentMenPos" asp-action="Configure" method="post">
+    <!-- Sekme içeriklerini oluşturun -->
+    <div id="Sekme1" class="tabcontent">
+        <!--Param Pos-->
+        <div class="cards-group">
+            <div class="card card-default">
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="UseSandbox" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="UseSandbox" />
+                            <span asp-validation-for="UseSandbox"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="ClientCode" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="ClientCode" />
+                            <span asp-validation-for="ClientCode"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="ClientUsername" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="ClientUsername" />
+                            <span asp-validation-for="ClientUsername"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="ClientPassword" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="ClientPassword" />
+                            <span asp-validation-for="ClientPassword"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="Guid" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="Guid" />
+                            <span asp-validation-for="Guid"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="TestUrl" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="TestUrl" />
+                            <span asp-validation-for="TestUrl"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="ProductUrl" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="ProductUrl" />
+                            <span asp-validation-for="ProductUrl"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="Installment" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="Installment" />
+                            <span asp-validation-for="Installment"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-3" style="text-align:right">
+
+                            <label>Version:</label>
+                        </div>
+                        <div class="col-md-9" style="text-align:left">
+                            <span>1.0</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-9">
+                            <input type="submit" name="save" class="btn bg-blue" value="@T("Admin.Common.Save")" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $("input#ClientCode").attr('minlength', '5');
+                $("input#ClientCode").attr('maxlength', '5');
+            });
+            $("input#ClientCode").on('input', function () {
+                if ($(this).val().length == 5) {
+                    if ($(this).val().length != '10738') {
+                        $('input#UseSandbox').attr('data-val', true);
+                        $('input#UseSandbox').val(true);
+                        $('input#UseSandbox').removeAttr('checked');
+                    }
+                    else {
+                        $('input#UseSandbox').attr('data-val', false);
+                        $('input#UseSandbox').val(false);
+                        $('input#UseSandbox').prop('checked', true);
+                    }
+                }
+            });
+        </script>
+        <!--Param Pos-->
+    </div>
+
+    <div id="Sekme2" class="tabcontent">
+
+        <!--Kuveyt Türk-->
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>
+                        nopCommerce için KuveytTürk eklentisini yapılandırmak için.<br />
+                        <br />
+                        1. <a href="https://kurumsal.kuveytturk.com.tr/Login/CorporateInitialLogin" target="_blank"> KuveytTurk Kontrol Panllerinden</a>birine giriş yapın.<br />
+                        2. Hesap Numaranızı (Müşteri No), Parolanızı ve Kullanıcı Adınızı bulun, kopyalayıp yapıştırın ve ardından Oturum Aç'a tıklayın.<br />
+                        3. Kodu sms olarak alacaksınız. Bu kodu girin ve ardından Oturum Aç'ı tıklayın.<br />
+                        4. Ana menüden (Tüm İşlemler), ardından (Yönetim) ve ardından (Kullanıcı İşlemleri) üzerine tıklayın.<br />
+                        5. Henüz kullanıcı eklemediyseniz, yeni kullanıcıyı api kullanıcısı olarak ekleyin ve şifreyi seçin (kullanıcı hesabını aktif etmeyi unutmayın).<br />
+                        6. CustomerId (Hesap No), MerchantId, UserName, Password kopyalayıp buraya yapıştırın.<br />
+                        7. Yapılandırmayı kaydedin.<br />
+                    </p>
+                    <p>
+                        <em>Not:</em><br />
+                        Bu eklentinin düzgün çalışması için birincil mağaza para biriminizin TL olduğundan emin olun.<br />
+                    </p>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <nop-label asp-for="CustomerId" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="CustomerId" asp-required="true" />
+                            <span asp-validation-for="CustomerId"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <nop-label asp-for="MerchantId" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="MerchantId" asp-required="true" />
+                            <span asp-validation-for="MerchantId"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <nop-label asp-for="UserName" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="UserName" asp-required="true" />
+                            <span asp-validation-for="UserName"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <nop-label asp-for="Password" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="Password" asp-value="@Model.Password" asp-required="true" />
+                            <span asp-validation-for="Password"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-9 col-md-offset-3">
+                            <input type="submit" name="save" class="btn bg-blue" value="@T("Admin.Common.Save")" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Kuveyt Türk-->
+    </div>
+
+    <div id="Sekme3" class="tabcontent">
+        <!--Diğer Ayarlar-->
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="ara_tutar" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="ara_tutar" />
+                            <span asp-validation-for="ara_tutar"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <nop-label asp-for="ust_tutar" />
+                        </div>
+                        <div class="col-md-9">
+                            <nop-editor asp-for="ust_tutar" />
+                            <span asp-validation-for="ust_tutar"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-9">
+                            <input type="submit" name="save" class="btn bg-blue" value="@T("Admin.Common.Save")" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--Diğer Ayarlar-->
+    </div>
+</form>
+
+
+<script>
+    // JavaScript ile sekmeler arasında geçiş yapmak için bir fonksiyon tanımlayın
+    function openTab(evt, tabName) {
+        // Tüm öğeleri gizleyin
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Tüm düğmeleri etkin olmayan hale getirin
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Seçilen sekmenin içeriğini gösterin ve düğmesini etkinleştirin
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+
+

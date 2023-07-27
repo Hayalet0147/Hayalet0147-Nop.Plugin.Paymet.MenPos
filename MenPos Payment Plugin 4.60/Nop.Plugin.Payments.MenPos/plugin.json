@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Payment methods",
+  "FriendlyName": "MenPos Payment Module",
+  "SystemName": "Payments.MenPos",
+  "Version": "1.0",
+  "SupportedVersions": [ "4.30", "4.40", "4.50", "4.60" ],
+  "Author": "bozkus team",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Payments.MenPos.dll",
+  "Description": "This module allows you to use multiple payment methods."
+}
